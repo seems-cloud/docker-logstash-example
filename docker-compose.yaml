@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  logstash:
+    container_name: logstash
+    hostname: logstash
+    build:
+      context: ./logstash
+    volumes:
+      - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
+      - ${PWD}/logstash/files/pipelines/pipeline.config:/app/config/pipelines/pipeline.config:ro
+      - ${PWD}/logstash/files/patterns:/app/config/patterns:ro
+  filebeat:
+    container_name: filebeat
+    hostname: filebeat
+    build:
+      context: ./filebeat
+    volumes:
+      - ${PWD}/filebeat/files/filebeat.yml:/app/filebeat.yml:ro

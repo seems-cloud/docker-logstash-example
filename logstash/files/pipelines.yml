@@ -1,0 +1,3 @@
+- pipeline.id: foo
+  path.config: "/app/config/pipelines/pipeline.config"
+  pipeline.workers: 3

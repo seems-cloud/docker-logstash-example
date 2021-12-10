@@ -22,7 +22,7 @@ RUN wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.16.0-l
     chown "${APP_UID}":"${APP_UID}" -R "${APP_DIR}" && \
     rm -f filebeat.tar.gz
 
-COPY --chown=1000:1000 ./entrypoint.sh "${APP_DIR}"
+COPY --chown="${APP_UID}":"${APP_UID}" ./entrypoint.sh "${APP_DIR}"
 
 WORKDIR "${APP_DIR}"
 USER "${APP_USER}"

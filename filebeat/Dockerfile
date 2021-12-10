@@ -19,7 +19,7 @@ WORKDIR /tmp
 
 RUN wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.16.0-linux-x86_64.tar.gz -O filebeat.tar.gz && \
     tar -xf filebeat.tar.gz -C "${APP_DIR}" --strip-components=1 && \
-    chown 1000:1000 -R "${APP_DIR}" && \
+    chown "${FB_VERSION}":"${FB_VERSION}" -R "${APP_DIR}" && \
     rm -f filebeat.tar.gz
 
 COPY --chown=1000:1000 ./entrypoint.sh "${APP_DIR}"

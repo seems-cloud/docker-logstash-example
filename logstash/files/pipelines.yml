@@ -1,3 +1,8 @@
-- pipeline.id: foo
-  path.config: "/app/config/pipelines/pipeline.config"
+- pipeline.id: ingest
   pipeline.workers: 3
+  pipeline.batch.size: 100
+  pipeline.batch.delay: 50
+  pipeline.ecs_compatibility: disabled
+  pipeline.ordered: false
+  queue.type: memory
+  path.config: "/app/config/pipelines/ingest.conf"

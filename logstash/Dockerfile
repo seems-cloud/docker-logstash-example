@@ -1,35 +1,34 @@
-FROM azul/zulu-openjdk-debian:11
+FROM openjdk:11-jdk-slim-bullseye
 
-ARG OS_LS_URL="https://artifacts.opensearch.org/logstash"
-ARG OS_LS_VERSION="7.13.2"
+ARG APP_URL="https://artifacts.elastic.co/downloads/logstash"
+ARG APP_VERSION="7.16.3"
+ARG APP_DIR="/app"
+ARG APP_USER="logstash"
+ARG APP_UID="1000"
 
-ENV APP_DIR="/app"
-ENV APP_USER="logstash"
-ENV APP_UID="1000"
+ARG DEBIAN_FRONTEND=noninteractive
 
 ENV PATH="${APP_DIR}/bin:${PATH}"
 
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && \
-    apt-get install wget telnet -y
+    apt-get install wget -y
 
 RUN groupadd -g "${APP_UID}" "${APP_USER}" && \
-    useradd -u "${APP_UID}" -g "${APP_UID}" \
-            -s /bin/bash -m -d "${APP_DIR}" "${APP_USER}"
+    useradd -u "${APP_UID}" -g "${APP_UID}" -s /bin/bash -m -d "${APP_DIR}" "${APP_USER}"
 
 WORKDIR /tmp
 
-RUN wget "${OS_LS_URL}/logstash-oss-with-opensearch-output-plugin-${OS_LS_VERSION}-linux-x64.tar.gz" -O logstash.tar.gz
-
-RUN tar -xf logstash.tar.gz -C "${APP_DIR}" --strip-components=1 && \
+RUN wget "${APP_URL}/logstash-${APP_VERSION}-linux-x86_64.tar.gz" -O logstash.tar.gz && \
+    tar -xvf logstash.tar.gz -C "${APP_DIR}" --strip-components=1 && \
     mkdir -p "${APP_DIR}/config/pipelines" && \
-    chown 1000:1000 -R "${APP_DIR}" && \
     rm -f logstash.tar.gz
 
-COPY --chown=1000:1000 ./entrypoint.sh "${APP_DIR}"
-
 WORKDIR "${APP_DIR}"
+
+RUN chown "${APP_USER}":"${APP_USER}" -R "${APP_DIR}"
+
 USER "${APP_USER}"
 
-ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
+CMD ["logstash"]

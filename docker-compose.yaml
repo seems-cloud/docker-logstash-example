@@ -6,10 +6,12 @@ services:
     hostname: logstash
     build:
       context: ./logstash
+    ports:
+      - "9600:9600"
     volumes:
+      - ${PWD}/logstash/files/logstash.yml:/app/config/logstash.yml:ro
       - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
-      - ${PWD}/logstash/files/pipelines/pipeline.config:/app/config/pipelines/pipeline.config:ro
-      - ${PWD}/logstash/files/patterns:/app/config/patterns:ro
+      - ${PWD}/logstash/files/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
   filebeat:
     container_name: filebeat
     hostname: filebeat

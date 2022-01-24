@@ -3,7 +3,9 @@ filebeat.inputs:
     enabled: true
     paths:
       - /app/server.log
+    fields:
+      type: json
 
 output.logstash:
-  hosts: [ "logstash:5044", "logstash:5045" ]
+  hosts: [ "logstash:5044" ]
   loadbalance: true

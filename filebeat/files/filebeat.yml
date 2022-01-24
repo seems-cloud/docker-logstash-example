@@ -5,6 +5,9 @@ filebeat.inputs:
       - /app/server.log
     fields:
       type: json
+      logzio_codec: json
+    fields_under_root: true
+    encoding: utf-8
 
 output.logstash:
   hosts: [ "logstash:5044" ]

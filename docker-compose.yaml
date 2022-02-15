@@ -9,6 +9,7 @@ services:
     volumes:
       - ${PWD}/files/nxlog/nxlog.conf:/app/nxlog.conf:ro
       - ${PWD}/files/nxlog/server.log:/tmp/server.log:ro
+      - certificates-data:/data:ro
   certificates:
     container_name: certificates
     hostname: certificates

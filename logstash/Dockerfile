@@ -28,6 +28,8 @@ RUN wget "${APP_URL}/logstash-${APP_VERSION}-linux-x86_64.tar.gz" -O logstash.ta
     mkdir -p "${APP_DIR}/config/pipelines" && \
     rm -f logstash.tar.gz
 
+RUN apt-get install openjdk-11-jdk -y
+
 WORKDIR "${APP_DIR}"
 
 COPY ./entrypoint.sh .

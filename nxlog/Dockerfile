@@ -27,7 +27,6 @@ RUN wget "${APP_URL}/nxlog-ce_${APP_VERSION}_debian_buster_amd64.deb" -O nxlog.d
     mv tmp/etc/nxlog/nxlog.conf "${APP_DIR}" && \
     mv tmp/usr/bin "${APP_DIR}" && \
     mv tmp/usr/lib/nxlog/modules "${APP_DIR}" && \
-    mkdir "${APP_DIR}/nxlog.d" && \
     mkdir "${APP_DIR}/log" && \
     rm -rf tmp
 

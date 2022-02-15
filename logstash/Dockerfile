@@ -36,4 +36,4 @@ RUN chown --recursive "${APP_USER}":"${APP_USER}" "${APP_DIR}"
 
 USER "${APP_USER}"
 
-ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
+ENTRYPOINT [ "/bin/bash", "entrypoint.sh" ]

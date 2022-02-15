@@ -6,16 +6,23 @@ services:
     hostname: logstash
     build:
       context: ./logstash
-    ports:
-      - "9600:9600"
     volumes:
-      - ${PWD}/logstash/files/logstash.yml:/app/config/logstash.yml:ro
-      - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
-      - ${PWD}/logstash/files/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
+      - ${PWD}/files/logstash/logstash.yml:/app/config/logstash.yml:ro
+      - ${PWD}/files/logstash/pipelines.yml:/app/config/pipelines.yml:ro
+      - ${PWD}/files/logstash/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
+  logstash-oss:
+    container_name: logstash-oss
+    hostname: logstash-oss
+    build:
+      context: ./logstash
+    volumes:
+      - ${PWD}/files/logstash-oss/logstash.yml:/app/config/logstash.yml:ro
+      - ${PWD}/files/logstash-oss/pipelines.yml:/app/config/pipelines.yml:ro
+      - ${PWD}/files/logstash-oss/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
   filebeat:
     container_name: filebeat
     hostname: filebeat
     build:
       context: ./filebeat
     volumes:
-      - ${PWD}/filebeat/files/filebeat.yml:/app/filebeat.yml:ro
+      - ${PWD}/files/filebeat/filebeat.yml:/app/filebeat.yml:ro

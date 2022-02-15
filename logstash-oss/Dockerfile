@@ -1,6 +1,5 @@
 FROM debian:bullseye-slim
 
-ARG APP_DIR="/app"
 ARG APP_USER="logstash"
 ARG APP_GROUP="${APP_USER}"
 ARG APP_UID="1000"
@@ -10,6 +9,7 @@ ARG APP_VERSION="7.16.3"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+ENV APP_DIR="/app"
 ENV PATH="${APP_DIR}/bin:${PATH}"
 
 SHELL ["/bin/bash", "-c"]
@@ -37,5 +37,3 @@ RUN chown --recursive "${APP_USER}":"${APP_USER}" "${APP_DIR}"
 USER "${APP_USER}"
 
 ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
-
-CMD ["logstash"]

@@ -14,7 +14,7 @@ services:
     container_name: logstash-oss
     hostname: logstash-oss
     build:
-      context: ./logstash
+      context: ./logstash-oss
     volumes:
       - ${PWD}/files/logstash-oss/logstash.yml:/app/config/logstash.yml:ro
       - ${PWD}/files/logstash-oss/pipelines.yml:/app/config/pipelines.yml:ro

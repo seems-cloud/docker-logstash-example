@@ -1,6 +1,14 @@
 version: '3.9'
 
 services:
+  nxlog:
+    container_name: nxlog
+    hostname: nxlog
+    build:
+      context: ./nxlog
+    volumes:
+      - ${PWD}/files/nxlog/nxlog.conf:/app/nxlog.conf:ro
+      - ${PWD}/files/nxlog/server.log:/tmp/server.log:ro
   certificates:
     container_name: certificates
     hostname: certificates
@@ -17,7 +25,7 @@ services:
       - ${PWD}/files/logstash/logstash.yml:/app/config/logstash.yml:ro
       - ${PWD}/files/logstash/pipelines.yml:/app/config/pipelines.yml:ro
       - ${PWD}/files/logstash/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
-      - certificates-data:/app/vendor:ro
+      - certificates-data:/data:ro
   logstash-oss:
     container_name: logstash-oss
     hostname: logstash-oss
@@ -27,14 +35,14 @@ services:
       - ${PWD}/files/logstash-oss/logstash.yml:/app/config/logstash.yml:ro
       - ${PWD}/files/logstash-oss/pipelines.yml:/app/config/pipelines.yml:ro
       - ${PWD}/files/logstash-oss/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
-      - certificates-data:/app/vendor:ro
-  filebeat:
-    container_name: filebeat
-    hostname: filebeat
-    build:
-      context: ./filebeat
-    volumes:
-      - ${PWD}/files/filebeat/filebeat.yml:/app/filebeat.yml:ro
+      - certificates-data:/data:ro
+#  filebeat:
+#    container_name: filebeat
+#    hostname: filebeat
+#    build:
+#      context: ./filebeat
+#    volumes:
+#      - ${PWD}/files/filebeat/filebeat.yml:/app/filebeat.yml:ro
 
 volumes:
   certificates-data:

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf data/*
+
 mkdir -p data/{logstash,logstash-oss}
 
 # Create CA
@@ -21,6 +23,3 @@ openssl x509 -req -days 365 \
 openssl x509 -req -days 365 \
   -CA ./ca/RootCA.crt.pem -CAkey ./ca/RootCA.key.pem -CAcreateserial \
   -in ./csr/LogstashOSS.csr.pem -out ./data/logstash-oss/logstash.crt.pem
-
-openssl x509 -noout -text -in ./data/logstash/logstash.crt.pem
-openssl x509 -noout -text -in ./data/logstash-oss/logstash.crt.pem

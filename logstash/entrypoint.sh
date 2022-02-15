@@ -1,3 +1,5 @@
 #!/bin/bash
 
-ls -lh vendor
+cp -R /data/"${HOSTNAME}"/* certs
+
+logstash

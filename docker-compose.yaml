@@ -7,8 +7,8 @@ services:
     build:
       context: ./nxlog
     volumes:
-      - ${PWD}/files/nxlog/nxlog.conf:/app/nxlog.conf:ro
-      - ${PWD}/files/nxlog/server.log:/tmp/server.log:ro
+      - ${PWD}/nxlog/files/nxlog.conf:/app/nxlog.conf:ro
+      - ${PWD}/nxlog/files/server.log:/tmp/server.log:ro
       - certificates-data:/data:ro
   certificates:
     container_name: certificates
@@ -23,9 +23,9 @@ services:
     build:
       context: ./logstash
     volumes:
-      - ${PWD}/files/logstash/logstash.yml:/app/config/logstash.yml:ro
-      - ${PWD}/files/logstash/pipelines.yml:/app/config/pipelines.yml:ro
-      - ${PWD}/files/logstash/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
+      - ${PWD}/logstash/files/logstash.yml:/app/config/logstash.yml:ro
+      - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
+      - ${PWD}/logstash/files/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
       - certificates-data:/data:ro
   logstash-oss:
     container_name: logstash-oss
@@ -33,9 +33,9 @@ services:
     build:
       context: ./logstash-oss
     volumes:
-      - ${PWD}/files/logstash-oss/logstash.yml:/app/config/logstash.yml:ro
-      - ${PWD}/files/logstash-oss/pipelines.yml:/app/config/pipelines.yml:ro
-      - ${PWD}/files/logstash-oss/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
+      - ${PWD}/logstash-oss/files/logstash.yml:/app/config/logstash.yml:ro
+      - ${PWD}/logstash-oss/files/pipelines.yml:/app/config/pipelines.yml:ro
+      - ${PWD}/logstash-oss/files/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
       - certificates-data:/data:ro
 #  filebeat:
 #    container_name: filebeat
@@ -43,7 +43,7 @@ services:
 #    build:
 #      context: ./filebeat
 #    volumes:
-#      - ${PWD}/files/filebeat/filebeat.yml:/app/filebeat.yml:ro
+#      - ${PWD}/filebeat/filebeat.yml:/app/filebeat.yml:ro
 
 volumes:
   certificates-data:

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sleep 3
+
 while true ; do
   [ -f "/data/${HOSTNAME}.crt.pem" ] && [ -f "/data/${HOSTNAME}.key.pem" ] && break
   sleep 1

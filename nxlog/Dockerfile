@@ -1,11 +1,12 @@
-FROM debian:buster-slim
+ARG BASE_IMAGE
+
+FROM debian:${BASE_IMAGE}
 
 ARG APP_USER="nxlog"
 ARG APP_GROUP="${APP_USER}"
 ARG APP_UID="1000"
 ARG APP_GID="${APP_UID}"
-ARG APP_URL="https://nxlog.co/system/files/products/files/348"
-ARG APP_VERSION="3.0.2272"
+ARG APP_VERSION
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -22,8 +23,9 @@ RUN groupadd -g "${APP_GID}" "${APP_GROUP}" && \
 
 WORKDIR /tmp
 
-RUN wget "${APP_URL}/nxlog-ce_${APP_VERSION}_debian_buster_amd64.deb" -O nxlog.deb && \
-    dpkg-deb -R nxlog.deb tmp/ &&  \
+COPY ./binaries/nxlog-ce_${APP_VERSION}.deb nxlog.deb
+
+RUN dpkg-deb -R nxlog.deb tmp/ &&  \
     mv tmp/etc/nxlog/nxlog.conf "${APP_DIR}" && \
     mv tmp/usr/bin "${APP_DIR}" && \
     mv tmp/usr/lib/nxlog/modules "${APP_DIR}" && \
@@ -33,8 +35,6 @@ RUN wget "${APP_URL}/nxlog-ce_${APP_VERSION}_debian_buster_amd64.deb" -O nxlog.d
 RUN ln -sf /dev/stdout /app/nxlog.log
 
 WORKDIR "${APP_DIR}"
-
-RUN cat nxlog.conf
 
 COPY ./entrypoint.sh .
 

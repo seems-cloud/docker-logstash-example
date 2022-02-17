@@ -1,5 +1,7 @@
 FROM debian:bullseye-slim
 
+ARG OSS
+
 ARG APP_USER="logstash"
 ARG APP_GROUP="${APP_USER}"
 ARG APP_UID="1000"
@@ -22,7 +24,7 @@ RUN groupadd -g "${APP_GID}" "${APP_GROUP}" && \
 
 WORKDIR /tmp
 
-RUN wget "${APP_URL}/logstash-${APP_VERSION}-linux-x86_64.tar.gz" -O logstash.tar.gz && \
+RUN wget "${APP_URL}/logstash-${OSS}-${APP_VERSION}-linux-x86_64.tar.gz" -O logstash.tar.gz && \
     tar -xvf logstash.tar.gz -C "${APP_DIR}" --strip-components=1 && \
     mkdir -p "${APP_DIR}/certs" && \
     mkdir -p "${APP_DIR}/config/pipelines" && \

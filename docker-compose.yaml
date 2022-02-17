@@ -35,8 +35,14 @@ services:
   logstash:
     container_name: logstash
     hostname: logstash
+    ports:
+      - "5050:5050"
     build:
       context: ./logstash
+      args:
+        - OSS=oss
+    environment:
+      - "ES_JAVA_OPTS=-Xms8g -XmX8g"
     volumes:
       - ${PWD}/logstash/files/logstash.yml:/app/config/logstash.yml:ro
       - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
@@ -45,12 +51,18 @@ services:
   logstash-oss:
     container_name: logstash-oss
     hostname: logstash-oss
+    ports:
+      - "5051:5050"
     build:
-      context: ./logstash-oss
+      context: ./logstash
+      args:
+        - OSS=oss
+    environment:
+      - "ES_JAVA_OPTS=-Xms8g -XmX8g"
     volumes:
-      - ${PWD}/logstash-oss/files/logstash.yml:/app/config/logstash.yml:ro
-      - ${PWD}/logstash-oss/files/pipelines.yml:/app/config/pipelines.yml:ro
-      - ${PWD}/logstash-oss/files/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
+      - ${PWD}/logstash/files/logstash.yml:/app/config/logstash.yml:ro
+      - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
+      - ${PWD}/logstash/files/pipelines/ingest.conf:/app/config/pipelines/ingest.conf:ro
       - certificates-data:/data:ro
 #  filebeat:
 #    container_name: filebeat
